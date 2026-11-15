@@ -20,7 +20,7 @@ button:active{border-color:var(--dark) var(--hi) var(--hi) var(--dark);box-shado
 button:focus-visible,[tabindex]:focus-visible{outline:1px dotted var(--ink);outline-offset:-4px}
 
 /* desktop */
-#desk{position:fixed;inset:0 0 28px 0;padding:12px;top:env(safe-area-inset-top,0px);bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+#desk{position:fixed;inset:0 0 28px 0;padding:12px;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;gap:6px;top:env(safe-area-inset-top,0px);bottom:calc(28px + env(safe-area-inset-bottom,0px))}
 .dicon{width:78px;text-align:center;color:#fff;cursor:pointer;padding:4px;background:none;border:0;box-shadow:none;display:block;min-height:0}
 .dicon svg{width:36px;height:36px;display:block;margin:0 auto 4px}
 .dicon span{display:inline-block;padding:1px 3px}
@@ -28,8 +28,6 @@ button:focus-visible,[tabindex]:focus-visible{outline:1px dotted var(--ink);outl
 
 /* windows */
 .win{position:absolute;display:flex;flex-direction:column;padding:2px}
-#explorer{left:90px;top:24px;width:min(760px,calc(100% - 110px));height:min(470px,calc(100% - 60px))}
-#notepad{left:150px;top:90px;width:min(520px,calc(100% - 170px));height:min(360px,calc(100% - 140px))}
 .win[hidden]{display:none}
 .title{display:flex;align-items:center;gap:4px;padding:2px 3px;color:#fff;font-weight:bold;background:linear-gradient(90deg,var(--navy),var(--navy2));cursor:default;touch-action:none}
 .title.off{background:linear-gradient(90deg,#808080,#b5b5b5)}
@@ -38,11 +36,9 @@ button:focus-visible,[tabindex]:focus-visible{outline:1px dotted var(--ink);outl
 .title button{width:18px;height:16px;min-height:0;padding:0;font-size:11px;line-height:1;font-weight:bold}
 .toolbar{display:flex;gap:4px;align-items:center;padding:4px 2px;border-bottom:1px solid var(--mid)}
 .toolbar label{padding:0 2px}
-#addr{flex:1;padding:3px 4px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
-#addr svg{width:14px;height:14px;flex:none}
-.panes{flex:1;display:flex;gap:3px;min-height:0;margin:3px 0}
-#tree{width:200px;flex:none;overflow:auto;padding:4px 2px}
-#list{flex:1;overflow:auto;padding:6px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px}
+.addr{flex:1;padding:3px 4px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
+.addr svg{width:14px;height:14px;flex:none}
+.list{flex:1;min-height:0;margin:3px 0;overflow:auto;padding:6px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px}
 .node{display:flex;align-items:center;gap:4px;padding:1px 4px;cursor:pointer;white-space:nowrap;width:100%;background:none;border:0;box-shadow:none;text-align:left;min-height:0}
 .node svg{width:16px;height:16px;flex:none}
 .node.kid{margin-left:18px;width:calc(100% - 18px)}
@@ -54,15 +50,16 @@ button:focus-visible,[tabindex]:focus-visible{outline:1px dotted var(--ink);outl
 .status{display:flex;gap:3px}
 .status div{padding:2px 6px;flex:1}
 .status div+div{flex:none;width:34%}
-#np-body{flex:1;margin-top:3px;padding:8px 10px;overflow:auto;user-select:text;background:var(--paper);font:13px/1.55 "Courier New",Courier,monospace;white-space:pre-wrap}
-#np-body a{color:#0000ee}
-#np-menu{padding:2px 6px;display:flex;gap:14px}
+.np-body{flex:1;min-height:0;margin-top:3px;padding:8px 10px;overflow:auto;user-select:text;background:var(--paper);font:13px/1.55 "Courier New",Courier,monospace;white-space:pre-wrap}
+.np-body a{color:#0000ee}
+.np-menu{padding:2px 6px;display:flex;gap:14px}
 
 /* taskbar */
 #bar{position:fixed;left:0;right:0;bottom:env(safe-area-inset-bottom,0px);height:28px;display:flex;align-items:center;gap:4px;padding:2px;z-index:50}
 body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:env(safe-area-inset-bottom,0px);background:var(--face);z-index:49}
 #start{font-weight:bold;display:flex;align-items:center;gap:4px;height:22px;padding:0 6px}
 #start svg{width:16px;height:16px}
+#tasks{flex:1;display:flex;gap:4px;min-width:0;overflow:hidden}
 .task{height:22px;min-width:120px;max-width:170px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:left}
 .task.on{background:repeating-conic-gradient(#c0c0c0 0 25%,#fff 0 50%) 0 0/2px 2px;border-color:var(--dark) var(--hi) var(--hi) var(--dark);font-weight:bold}
 #clock{margin-left:auto;padding:3px 10px;font-size:12px}
@@ -75,8 +72,7 @@ body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:env(safe-ar
 #menu hr{margin:2px 0;border:0;border-top:1px solid var(--mid);border-bottom:1px solid var(--hi)}
 
 @media (max-width:700px){
- #explorer,#notepad{left:4px!important;top:4px!important;width:calc(100% - 8px)!important;height:calc(100% - 8px)!important}
- #tree{display:none}
+ .win{left:4px!important;top:4px!important;width:calc(100% - 8px)!important;height:calc(100% - 8px)!important}
  #desk{display:none}
  .task{min-width:0;flex:1}
  #clock{display:none}
@@ -100,31 +96,6 @@ body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:env(safe-ar
  <button class="dicon" id="d-pc" aria-label="Open My Portfolio"><svg><use href="#i-pc"/></svg><span>My Portfolio</span></button>
 </div>
 
-<!-- Explorer -->
-<section class="win raised" id="explorer" aria-label="Portfolio explorer">
- <div class="title" data-drag="explorer"><svg><use href="#i-open"/></svg><span class="t" id="ex-title">My Portfolio</span>
-  <button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div>
- <div class="toolbar">
-  <button id="back" aria-label="Back">◄ Back</button>
-  <button id="up" aria-label="Up one level">▲ Up</button>
-  <label for="addr">Address</label>
-  <div id="addr" class="sunken" role="status"></div>
- </div>
- <div class="panes">
-  <div id="tree" class="sunken" role="tree" aria-label="Folders"></div>
-  <div id="list" class="sunken" role="list" aria-label="Contents"></div>
- </div>
- <div class="status"><div class="sunken" id="st-count"></div><div class="sunken" id="st-sel"></div></div>
-</section>
-
-<!-- Notepad -->
-<section class="win raised" id="notepad" hidden aria-label="File viewer">
- <div class="title" data-drag="notepad"><svg><use href="#i-doc"/></svg><span class="t" id="np-title">Untitled - Notepad</span>
-  <button data-act="close" aria-label="Close">×</button></div>
- <div id="np-menu"><span>File</span><span>Edit</span><span>Help</span></div>
- <div id="np-body" class="sunken" tabindex="0"></div>
-</section>
-
 <!-- Taskbar -->
 <div id="menu" class="raised" hidden>
  <div class="side">Portfolio 98</div>
@@ -132,8 +103,7 @@ body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:env(safe-ar
 </div>
 <div id="bar" class="raised">
  <button id="start"><svg><use href="#i-win"/></svg>Start</button>
- <button class="task on" id="t-ex"></button>
- <button class="task" id="t-np" hidden></button>
+ <div id="tasks"></div>
  <div id="clock" class="sunken"></div>
 </div>
 
@@ -173,109 +143,106 @@ const SITE = {
 /* ===================== END EDIT BLOCK ===================== */
 
 const $ = s => document.querySelector(s);
-const ico = (id, cls) => `<svg${cls ? ` class="${cls}"` : ""}><use href="#i-${id}"/></svg>`;
-let cur = null, hist = [], sel = null;
-const touch = matchMedia("(hover:none)").matches;
+const ico = id => `<svg><use href="#i-${id}"/></svg>`;
+const mk = h => { const t = document.createElement("template"); t.innerHTML = h.trim(); return t.content.firstChild; };
 const folderOf = id => SITE.folders.find(f => f.id === id);
+const touch = matchMedia("(hover:none)").matches;
+const W = {}; let z = 10, n = 0, active = null;
 
-function go(id, push = true) {
-  if (push) hist.push(cur);
-  cur = id; sel = null; draw();
+function refresh() {
+  for (const id in W) {
+    W[id].el.querySelector(".title").classList.toggle("off", id !== active);
+    W[id].task.classList.toggle("on", id === active && !W[id].el.hidden);
+  }
 }
-function draw() {
-  const f = cur && folderOf(cur);
-  $("#ex-title").textContent = f ? f.name : SITE.title;
-  $("#t-ex").innerHTML = "";
-  $("#t-ex").textContent = f ? f.name : SITE.title;
-  $("#addr").innerHTML = ico(f ? "open" : "pc") + `<span>C:\\${SITE.title.replace(/\s+/g, "")}${f ? "\\" + f.name.replace(/\s+/g, "") : ""}</span>`;
-  $("#up").disabled = !cur;
-  $("#back").disabled = !hist.length;
+function focusWin(id) { W[id].el.style.zIndex = ++z; active = id; refresh(); }
 
-  // tree
-  $("#tree").innerHTML =
-    `<button class="node ${!cur ? "sel" : ""}" data-go="" role="treeitem">${ico("pc")}<span>${SITE.title}</span></button>` +
-    SITE.folders.map(x => `<button class="node kid ${cur === x.id ? "sel" : ""}" data-go="${x.id}" role="treeitem">${ico(cur === x.id ? "open" : "folder")}<span>${x.name}</span></button>`).join("");
+function openWin(id, o) {
+  if (W[id]) { W[id].el.hidden = false; focusWin(id); return W[id].el; }
+  const w = mk(`<section class="win raised" aria-label="${o.title}"><div class="title">${ico(o.icon)}<span class="t">${o.title}</span><button data-a="min" aria-label="Minimize">_</button><button data-a="max" aria-label="Maximize">□</button><button data-a="close" aria-label="Close">×</button></div>${o.html}</section>`);
+  const k = n++ % 6, left = 110 + k * 28, top = 24 + k * 28;
+  Object.assign(w.style, { left: left + "px", top: top + "px", width: `min(${o.w}px,calc(100% - ${left + 16}px))`, height: `min(${o.h}px,calc(100% - ${top + 44}px))` });
+  document.body.appendChild(w);
+  const t = mk(`<button class="task">${o.title}</button>`);
+  $("#tasks").appendChild(t);
+  W[id] = { el: w, task: t };
+  const saved = {};
+  w.addEventListener("pointerdown", () => focusWin(id));
+  w.querySelector(".title").addEventListener("pointerdown", e => {
+    if (e.target.closest("button") || innerWidth <= 700 || w.classList.contains("full")) return;
+    drag = { w, dx: e.clientX - w.offsetLeft, dy: e.clientY - w.offsetTop };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  });
+  w.querySelectorAll("[data-a]").forEach(b => b.onclick = () => {
+    const a = b.dataset.a;
+    if (a === "min") { w.hidden = true; if (active === id) active = null; refresh(); }
+    if (a === "close") { w.remove(); t.remove(); delete W[id]; if (active === id) active = null; refresh(); }
+    if (a === "max") {
+      if (w.classList.toggle("full")) { Object.assign(saved, { l: w.style.left, t: w.style.top, w: w.style.width, h: w.style.height }); Object.assign(w.style, { left: "0", top: "0", width: "100%", height: "100%" }); }
+      else Object.assign(w.style, { left: saved.l, top: saved.t, width: saved.w, height: saved.h });
+    }
+  });
+  t.onclick = () => { if (w.hidden || active !== id) { w.hidden = false; focusWin(id); } else { w.hidden = true; active = null; refresh(); } };
+  focusWin(id);
+  return w;
+}
 
-  // list
+function openFolder(fid) {
+  const f = fid && folderOf(fid);
   const items = f ? f.files.map(x => ({ key: x.name, name: x.name, icon: x.type === "link" ? "link" : "doc", kind: "file" }))
                   : SITE.folders.map(x => ({ key: x.id, name: x.name, icon: "folder", kind: "folder" }));
-  $("#list").innerHTML = items.map(i => `<button class="item ${sel === i.key ? "sel" : ""}" data-key="${i.key}" data-kind="${i.kind}" role="listitem">${ico(i.icon)}<span>${i.name}</span></button>`).join("");
-  $("#st-count").textContent = items.length + " object(s)";
-  $("#st-sel").textContent = sel ? "1 selected" : "";
-}
-function openItem(key, kind) {
-  if (kind === "folder") return go(key);
-  const f = folderOf(cur), file = f.files.find(x => x.name === key);
-  $("#np-title").textContent = file.name + " - Notepad";
-  $("#np-body").innerHTML = file.body;
-  show("notepad", true);
-}
-function show(id, on) {
-  $("#" + id).hidden = !on;
-  if (id === "notepad") $("#t-np").hidden = !on, $("#t-np").textContent = on ? $("#np-title").textContent : "";
-  if (on) focusWin(id);
-  tasks();
-}
-function focusWin(id) {
-  const w = $("#" + id); w.style.zIndex = ++z; active = id; tasks();
-}
-function tasks() {
-  $("#t-ex").classList.toggle("on", active === "explorer" && !$("#explorer").hidden);
-  $("#t-np").classList.toggle("on", active === "notepad" && !$("#notepad").hidden);
-  document.querySelectorAll(".win .title").forEach(t => t.classList.toggle("off", t.dataset.drag !== active));
-}
-let z = 10, active = "explorer";
-
-// events
-$("#tree").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) go(b.dataset.go || null); });
-$("#list").addEventListener("click", e => {
-  const b = e.target.closest(".item");
-  if (!b) { sel = null; draw(); return; }
-  sel = b.dataset.key;
-  if (touch) return openItem(b.dataset.key, b.dataset.kind);
-  draw();
-});
-$("#list").addEventListener("dblclick", e => { const b = e.target.closest(".item"); if (b) openItem(b.dataset.key, b.dataset.kind); });
-$("#list").addEventListener("keydown", e => { const b = e.target.closest(".item"); if (b && e.key === "Enter") openItem(b.dataset.key, b.dataset.kind); });
-$("#back").onclick = () => { if (hist.length) go(hist.pop(), false); };
-$("#up").onclick = () => go(null);
-
-document.querySelectorAll(".win").forEach(w => {
-  w.addEventListener("pointerdown", () => focusWin(w.id));
-  w.querySelectorAll("[data-act]").forEach(b => b.onclick = () => {
-    const a = b.dataset.act;
-    if (a === "close" || a === "min") show(w.id, false);
-    if (a === "max") { w.classList.toggle("full"); if (w.classList.contains("full")) Object.assign(w.style, { left: "0", top: "0", width: "100%", height: "100%" }); else { w.style.left = w.style.top = w.style.width = w.style.height = ""; } }
+  const path = "C:\\" + SITE.title.replace(/\s+/g, "") + (f ? "\\" + f.name.replace(/\s+/g, "") : "");
+  const w = openWin(f ? "f:" + fid : "root", {
+    title: f ? f.name : SITE.title, icon: f ? "open" : "pc", w: f ? 480 : 560, h: f ? 330 : 370,
+    html: `<div class="toolbar"><label>Address</label><div class="addr sunken">${ico(f ? "open" : "pc")}<span>${path}</span></div></div>
+      <div class="list sunken" role="list">${items.map(i => `<button class="item" data-key="${i.key}" data-kind="${i.kind}" role="listitem">${ico(i.icon)}<span>${i.name}</span></button>`).join("")}</div>
+      <div class="status"><div class="sunken">${items.length} object(s)</div><div class="sunken st"></div></div>`
   });
-});
-$("#d-pc").onclick = () => { show("explorer", true); };
-$("#t-ex").onclick = () => { const h = $("#explorer").hidden || active !== "explorer"; show("explorer", h); };
-$("#t-np").onclick = () => { const h = $("#notepad").hidden || active !== "notepad"; show("notepad", h); };
+  const list = w.querySelector(".list");
+  if (list.dataset.bound) return;
+  list.dataset.bound = 1;
+  const pick = b => { list.querySelectorAll(".item").forEach(x => x.classList.toggle("sel", x === b)); w.querySelector(".st").textContent = b ? "1 selected" : ""; };
+  const go = b => b.dataset.kind === "folder" ? openFolder(b.dataset.key) : openFile(fid, b.dataset.key);
+  list.addEventListener("click", e => { const b = e.target.closest(".item"); pick(b); if (b && touch) go(b); });
+  list.addEventListener("dblclick", e => { const b = e.target.closest(".item"); if (b) go(b); });
+  list.addEventListener("keydown", e => { const b = e.target.closest(".item"); if (b && e.key === "Enter") go(b); });
+}
+function openFile(fid, name) {
+  const file = folderOf(fid).files.find(x => x.name === name);
+  openWin("n:" + fid + "/" + name, {
+    title: name + " - Notepad", icon: file.type === "link" ? "link" : "doc", w: 520, h: 340,
+    html: `<div class="np-menu"><span>File</span><span>Edit</span><span>Help</span></div><div class="np-body sunken" tabindex="0">${file.body}</div>`
+  });
+}
 
 // drag
 let drag = null;
-document.querySelectorAll("[data-drag]").forEach(t => t.addEventListener("pointerdown", e => {
-  if (e.target.closest("button") || innerWidth <= 700) return;
-  const w = $("#" + t.dataset.drag); if (w.classList.contains("full")) return;
-  drag = { w, dx: e.clientX - w.offsetLeft, dy: e.clientY - w.offsetTop };
-  t.setPointerCapture(e.pointerId);
-}));
 addEventListener("pointermove", e => { if (drag) { drag.w.style.left = Math.max(0, e.clientX - drag.dx) + "px"; drag.w.style.top = Math.max(0, e.clientY - drag.dy) + "px"; } });
 addEventListener("pointerup", () => drag = null);
+
+// desktop icons
+$("#desk").innerHTML = [{ id: "", name: SITE.title, icon: "pc" }, ...SITE.folders.map(f => ({ id: f.id, name: f.name, icon: "folder" }))]
+  .map(d => `<button class="dicon" data-d="${d.id}">${ico(d.icon)}<span>${d.name}</span></button>`).join("");
+$("#desk").addEventListener("click", e => {
+  const b = e.target.closest(".dicon"); if (!b) return;
+  document.querySelectorAll(".dicon").forEach(x => x.classList.toggle("sel", x === b));
+  if (touch) openFolder(b.dataset.d || null);
+});
+$("#desk").addEventListener("dblclick", e => { const b = e.target.closest(".dicon"); if (b) openFolder(b.dataset.d || null); });
 
 // start menu
 $("#menu-opts").innerHTML =
   SITE.folders.map(x => `<button class="node" data-m="${x.id}">${ico("folder")}<span>${x.name}</span></button>`).join("") +
   `<hr><button class="node" data-m="">${ico("pc")}<span>${SITE.title}</span></button>`;
 $("#start").onclick = e => { e.stopPropagation(); $("#menu").hidden = !$("#menu").hidden; };
-$("#menu").addEventListener("click", e => { const b = e.target.closest("[data-m]"); if (!b) return; $("#menu").hidden = true; show("explorer", true); go(b.dataset.m || null); });
+$("#menu").addEventListener("click", e => { const b = e.target.closest("[data-m]"); if (!b) return; $("#menu").hidden = true; openFolder(b.dataset.m || null); });
 document.addEventListener("click", e => { if (!e.target.closest("#menu,#start")) $("#menu").hidden = true; });
 
 // clock
 const tick = () => { $("#clock").textContent = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); };
 tick(); setInterval(tick, 20000);
 
-draw(); focusWin("explorer");
+openFolder(null);
 </script>
 </body>
 </html>
