@@ -19,14 +19,12 @@ button{font:inherit;color:var(--ink);cursor:pointer;background:var(--face);borde
 button:active{border-color:var(--dark) var(--hi) var(--hi) var(--dark);box-shadow:inset 1px 1px var(--mid)}
 button:focus-visible,[tabindex]:focus-visible{outline:1px dotted var(--ink);outline-offset:-4px}
 
-/* desktop */
 #desk{position:fixed;inset:0 0 28px 0;padding:12px;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;gap:6px;top:env(safe-area-inset-top,0px);bottom:calc(28px + env(safe-area-inset-bottom,0px))}
 .dicon{width:78px;text-align:center;color:#fff;cursor:pointer;padding:4px;background:none;border:0;box-shadow:none;display:block;min-height:0}
 .dicon svg{width:36px;height:36px;display:block;margin:0 auto 4px}
 .dicon span{display:inline-block;padding:1px 3px}
 .dicon:focus-visible span,.dicon.sel span{background:var(--navy);outline:1px dotted #fff}
 
-/* windows */
 .win{position:absolute;display:flex;flex-direction:column;padding:2px}
 .win[hidden]{display:none}
 .title{display:flex;align-items:center;gap:4px;padding:2px 3px;color:#fff;font-weight:bold;background:linear-gradient(90deg,var(--navy),var(--navy2));cursor:default;touch-action:none}
@@ -54,7 +52,6 @@ button:focus-visible,[tabindex]:focus-visible{outline:1px dotted var(--ink);outl
 .np-body a{color:#0000ee}
 .np-menu{padding:2px 6px;display:flex;gap:14px}
 
-/* taskbar */
 #bar{position:fixed;left:0;right:0;bottom:env(safe-area-inset-bottom,0px);height:28px;display:flex;align-items:center;gap:4px;padding:2px;z-index:50}
 body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:env(safe-area-inset-bottom,0px);background:var(--face);z-index:49}
 #start{font-weight:bold;display:flex;align-items:center;gap:4px;height:22px;padding:0 6px}
@@ -108,27 +105,21 @@ body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:env(safe-ar
 </div>
 
 <script>
-/* =====================================================
-   EDIT THIS BLOCK — it is the only part you need to fill in.
-   Each file opens like a Notepad document. HTML is allowed
-   inside body (e.g. <a href="...">links</a>).
-   type: "doc" for text files, "link" for contact items.
-   ===================================================== */
 const SITE = {
   title: "My Portfolio",
   folders: [
     { id: "about", name: "About Me", files: [
-      { name: "about.txt", type: "doc", body: "Hi, I’m [Your Name].\n\n[Write a short introduction: who you are, what you study or do, and what you’re looking for.]" },
-      { name: "background.txt", type: "doc", body: "[Education, experience, or the story behind your path.]" },
-      { name: "interests.txt", type: "doc", body: "[What you do outside of work or school.]" }
+      { name: "about.txt", type: "doc", body: "Hi, I’m Dean Rendell Dalisay!.\n\n A fourth year student currently taking a Bachelor of Science in Information Technology." },
+      { name: "background.txt", type: "doc", body: "An unexpected path, yet the only thing that made sense to me at the time. Yet, this is something I do not regret." },
+      { name: "interests.txt", type: "doc", body: "Reading books and sometimes reading up on literary work outside of fiction. Avid videogame enjoyer. Quite the varied taste in music. Curious about things eccentric by mainstream standards." }
     ]},
     { id: "skills", name: "Key Skills", files: [
-      { name: "technical.txt", type: "doc", body: "[Skill 1]\n[Skill 2]\n[Skill 3]" },
-      { name: "tools.txt", type: "doc", body: "[Software, languages, frameworks]" },
-      { name: "soft-skills.txt", type: "doc", body: "[Communication, teamwork, leadership...]" }
+      { name: "technical.txt", type: "doc", body: "Documentation\nProofreading\nIT Fundamentals" },
+      { name: "tools.txt", type: "doc", body: "MS Suite,Python, C#, C++, Java, Javascript, and SAP " },
+      { name: "soft-skills.txt", type: "doc", body: "Adaptability, English Fluency, Planning and Preperation" }
     ]},
     { id: "projects", name: "Projects", files: [
-      { name: "project-1.txt", type: "doc", body: "[Project name]\n\nWhat it is: [one line]\nMy role: [what you did]\nTools: [stack]\nLink: <a href=\"#\">[add link]</a>" },
+      { name: "Thesis.txt", type: "doc", body: "Inventory Management\n\nWhat it is: Web Service\nMy role: Documentation\nTools: MS Word\nLink: <a href=\"#\">https://padilla-veterinary-clinic.netlify.app</a>" },
       { name: "project-2.txt", type: "doc", body: "[Project name]\n\nWhat it is: [one line]\nMy role: [what you did]\nTools: [stack]\nLink: <a href=\"#\">[add link]</a>" },
       { name: "project-3.txt", type: "doc", body: "[Project name]\n\nWhat it is: [one line]\nMy role: [what you did]\nTools: [stack]\nLink: <a href=\"#\">[add link]</a>" }
     ]},
@@ -140,7 +131,6 @@ const SITE = {
     ]}
   ]
 };
-/* ===================== END EDIT BLOCK ===================== */
 
 const $ = s => document.querySelector(s);
 const ico = id => `<svg><use href="#i-${id}"/></svg>`;
