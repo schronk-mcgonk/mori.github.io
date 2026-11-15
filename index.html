@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Portfolio</title>
+<style>
+:root{--desk:#008080;--face:#c0c0c0;--hi:#fff;--mid:#808080;--dark:#404040;--ink:#000;--navy:#000080;--navy2:#1084d0;--paper:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--desk:#004848}}
+:root[data-theme="dark"]{--desk:#004848}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0}
+*{box-sizing:border-box}
+body{background:var(--desk);color:var(--ink);font:13px Tahoma,"MS Sans Serif",Verdana,Arial,sans-serif;overflow:hidden;user-select:none}
+.raised{background:var(--face);border:1px solid;border-color:var(--hi) var(--dark) var(--dark) var(--hi);box-shadow:inset -1px -1px var(--mid),inset 1px 1px #dfdfdf}
+.sunken{background:var(--paper);border:1px solid;border-color:var(--mid) var(--hi) var(--hi) var(--mid);box-shadow:inset 1px 1px var(--dark),inset -1px -1px #dfdfdf}
+button{font:inherit;color:var(--ink);cursor:pointer;background:var(--face);border:1px solid;border-color:var(--hi) var(--dark) var(--dark) var(--hi);box-shadow:inset -1px -1px var(--mid),inset 1px 1px #dfdfdf;padding:2px 8px;min-height:24px}
+button:active{border-color:var(--dark) var(--hi) var(--hi) var(--dark);box-shadow:inset 1px 1px var(--mid)}
+button:focus-visible,[tabindex]:focus-visible{outline:1px dotted var(--ink);outline-offset:-4px}
+
+/* desktop */
+#desk{position:fixed;inset:0 0 28px 0;padding:12px;top:env(safe-area-inset-top,0px);bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+.dicon{width:78px;text-align:center;color:#fff;cursor:pointer;padding:4px;background:none;border:0;box-shadow:none;display:block;min-height:0}
+.dicon svg{width:36px;height:36px;display:block;margin:0 auto 4px}
+.dicon span{display:inline-block;padding:1px 3px}
+.dicon:focus-visible span,.dicon.sel span{background:var(--navy);outline:1px dotted #fff}
+
+/* windows */
+.win{position:absolute;display:flex;flex-direction:column;padding:2px}
+#explorer{left:90px;top:24px;width:min(760px,calc(100% - 110px));height:min(470px,calc(100% - 60px))}
+#notepad{left:150px;top:90px;width:min(520px,calc(100% - 170px));height:min(360px,calc(100% - 140px))}
+.win[hidden]{display:none}
+.title{display:flex;align-items:center;gap:4px;padding:2px 3px;color:#fff;font-weight:bold;background:linear-gradient(90deg,var(--navy),var(--navy2));cursor:default;touch-action:none}
+.title.off{background:linear-gradient(90deg,#808080,#b5b5b5)}
+.title svg{width:16px;height:16px;flex:none}
+.title .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.title button{width:18px;height:16px;min-height:0;padding:0;font-size:11px;line-height:1;font-weight:bold}
+.toolbar{display:flex;gap:4px;align-items:center;padding:4px 2px;border-bottom:1px solid var(--mid)}
+.toolbar label{padding:0 2px}
+#addr{flex:1;padding:3px 4px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
+#addr svg{width:14px;height:14px;flex:none}
+.panes{flex:1;display:flex;gap:3px;min-height:0;margin:3px 0}
+#tree{width:200px;flex:none;overflow:auto;padding:4px 2px}
+#list{flex:1;overflow:auto;padding:6px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px}
+.node{display:flex;align-items:center;gap:4px;padding:1px 4px;cursor:pointer;white-space:nowrap;width:100%;background:none;border:0;box-shadow:none;text-align:left;min-height:0}
+.node svg{width:16px;height:16px;flex:none}
+.node.kid{margin-left:18px;width:calc(100% - 18px)}
+.node span{padding:0 2px}
+.node.sel span,.item.sel span{background:var(--navy);color:#fff}
+.item{width:92px;text-align:center;padding:4px;cursor:pointer;background:none;border:0;box-shadow:none;min-height:0}
+.item svg{width:36px;height:36px;display:block;margin:0 auto 4px}
+.item span{display:inline-block;padding:1px 3px;word-break:break-word}
+.status{display:flex;gap:3px}
+.status div{padding:2px 6px;flex:1}
+.status div+div{flex:none;width:34%}
+#np-body{flex:1;margin-top:3px;padding:8px 10px;overflow:auto;user-select:text;background:var(--paper);font:13px/1.55 "Courier New",Courier,monospace;white-space:pre-wrap}
+#np-body a{color:#0000ee}
+#np-menu{padding:2px 6px;display:flex;gap:14px}
+
+/* taskbar */
+#bar{position:fixed;left:0;right:0;bottom:env(safe-area-inset-bottom,0px);height:28px;display:flex;align-items:center;gap:4px;padding:2px;z-index:50}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:env(safe-area-inset-bottom,0px);background:var(--face);z-index:49}
+#start{font-weight:bold;display:flex;align-items:center;gap:4px;height:22px;padding:0 6px}
+#start svg{width:16px;height:16px}
+.task{height:22px;min-width:120px;max-width:170px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:left}
+.task.on{background:repeating-conic-gradient(#c0c0c0 0 25%,#fff 0 50%) 0 0/2px 2px;border-color:var(--dark) var(--hi) var(--hi) var(--dark);font-weight:bold}
+#clock{margin-left:auto;padding:3px 10px;font-size:12px}
+#menu{position:fixed;left:2px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:210px;z-index:60;display:flex;padding:2px}
+#menu[hidden]{display:none}
+#menu .side{width:24px;background:linear-gradient(0deg,var(--navy),var(--navy2));color:#fff;font:bold 15px Tahoma,Arial,sans-serif;writing-mode:vertical-rl;transform:rotate(180deg);padding:6px 3px;letter-spacing:.5px}
+#menu .opts{flex:1;display:flex;flex-direction:column}
+#menu .node{padding:8px 10px;gap:10px;font-size:13px}
+#menu .node:hover,#menu .node:focus-visible{background:var(--navy);color:#fff}
+#menu hr{margin:2px 0;border:0;border-top:1px solid var(--mid);border-bottom:1px solid var(--hi)}
+
+@media (max-width:700px){
+ #explorer,#notepad{left:4px!important;top:4px!important;width:calc(100% - 8px)!important;height:calc(100% - 8px)!important}
+ #tree{display:none}
+ #desk{display:none}
+ .task{min-width:0;flex:1}
+ #clock{display:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <symbol id="i-folder" viewBox="0 0 32 32"><path d="M2 8h10l3 3h15v17H2z" fill="#c8a000" stroke="#000" stroke-width="1.2"/><path d="M2 13h28v15H2z" fill="#ffe36b" stroke="#000" stroke-width="1.2"/></symbol>
+  <symbol id="i-open" viewBox="0 0 32 32"><path d="M2 8h10l3 3h13v5H2z" fill="#c8a000" stroke="#000" stroke-width="1.2"/><path d="M1 28l5-13h25l-5 13z" fill="#ffe36b" stroke="#000" stroke-width="1.2"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 32 32"><path d="M7 3h13l6 6v20H7z" fill="#fff" stroke="#000" stroke-width="1.2"/><path d="M20 3v6h6" fill="#c0c0c0" stroke="#000" stroke-width="1.2"/><path d="M10 14h13M10 18h13M10 22h9" stroke="#000080" stroke-width="1.4"/></symbol>
+  <symbol id="i-link" viewBox="0 0 32 32"><path d="M7 3h13l6 6v20H7z" fill="#fff" stroke="#000" stroke-width="1.2"/><circle cx="16" cy="19" r="6" fill="#00a" stroke="#000" stroke-width="1"/><path d="M10 19h12M16 13c-3 3-3 9 0 12M16 13c3 3 3 9 0 12" stroke="#fff" fill="none"/></symbol>
+  <symbol id="i-pc" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="17" fill="#c0c0c0" stroke="#000" stroke-width="1.2"/><rect x="7" y="7" width="18" height="11" fill="#008080" stroke="#000"/><rect x="10" y="24" width="12" height="4" fill="#c0c0c0" stroke="#000"/></symbol>
+  <symbol id="i-win" viewBox="0 0 16 16"><path d="M1 3l6-1v6H1zM8 2l7-1v7H8zM1 9h6v6l-6-1zM8 9h7v7l-7-1z" fill="#e33"/><path d="M8 2l7-1v7H8z" fill="#3a3"/><path d="M1 9h6v6l-6-1z" fill="#33e"/><path d="M8 9h7v7l-7-1z" fill="#ec0"/></symbol>
+ </defs>
+</svg>
+
+<div id="desk">
+ <button class="dicon" id="d-pc" aria-label="Open My Portfolio"><svg><use href="#i-pc"/></svg><span>My Portfolio</span></button>
+</div>
+
+<!-- Explorer -->
+<section class="win raised" id="explorer" aria-label="Portfolio explorer">
+ <div class="title" data-drag="explorer"><svg><use href="#i-open"/></svg><span class="t" id="ex-title">My Portfolio</span>
+  <button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div>
+ <div class="toolbar">
+  <button id="back" aria-label="Back">◄ Back</button>
+  <button id="up" aria-label="Up one level">▲ Up</button>
+  <label for="addr">Address</label>
+  <div id="addr" class="sunken" role="status"></div>
+ </div>
+ <div class="panes">
+  <div id="tree" class="sunken" role="tree" aria-label="Folders"></div>
+  <div id="list" class="sunken" role="list" aria-label="Contents"></div>
+ </div>
+ <div class="status"><div class="sunken" id="st-count"></div><div class="sunken" id="st-sel"></div></div>
+</section>
+
+<!-- Notepad -->
+<section class="win raised" id="notepad" hidden aria-label="File viewer">
+ <div class="title" data-drag="notepad"><svg><use href="#i-doc"/></svg><span class="t" id="np-title">Untitled - Notepad</span>
+  <button data-act="close" aria-label="Close">×</button></div>
+ <div id="np-menu"><span>File</span><span>Edit</span><span>Help</span></div>
+ <div id="np-body" class="sunken" tabindex="0"></div>
+</section>
+
+<!-- Taskbar -->
+<div id="menu" class="raised" hidden>
+ <div class="side">Portfolio 98</div>
+ <div class="opts" id="menu-opts"></div>
+</div>
+<div id="bar" class="raised">
+ <button id="start"><svg><use href="#i-win"/></svg>Start</button>
+ <button class="task on" id="t-ex"></button>
+ <button class="task" id="t-np" hidden></button>
+ <div id="clock" class="sunken"></div>
+</div>
+
+<script>
+/* =====================================================
+   EDIT THIS BLOCK — it is the only part you need to fill in.
+   Each file opens like a Notepad document. HTML is allowed
+   inside body (e.g. <a href="...">links</a>).
+   type: "doc" for text files, "link" for contact items.
+   ===================================================== */
+const SITE = {
+  title: "My Portfolio",
+  folders: [
+    { id: "about", name: "About Me", files: [
+      { name: "about.txt", type: "doc", body: "Hi, I’m [Your Name].\n\n[Write a short introduction: who you are, what you study or do, and what you’re looking for.]" },
+      { name: "background.txt", type: "doc", body: "[Education, experience, or the story behind your path.]" },
+      { name: "interests.txt", type: "doc", body: "[What you do outside of work or school.]" }
+    ]},
+    { id: "skills", name: "Key Skills", files: [
+      { name: "technical.txt", type: "doc", body: "[Skill 1]\n[Skill 2]\n[Skill 3]" },
+      { name: "tools.txt", type: "doc", body: "[Software, languages, frameworks]" },
+      { name: "soft-skills.txt", type: "doc", body: "[Communication, teamwork, leadership...]" }
+    ]},
+    { id: "projects", name: "Projects", files: [
+      { name: "project-1.txt", type: "doc", body: "[Project name]\n\nWhat it is: [one line]\nMy role: [what you did]\nTools: [stack]\nLink: <a href=\"#\">[add link]</a>" },
+      { name: "project-2.txt", type: "doc", body: "[Project name]\n\nWhat it is: [one line]\nMy role: [what you did]\nTools: [stack]\nLink: <a href=\"#\">[add link]</a>" },
+      { name: "project-3.txt", type: "doc", body: "[Project name]\n\nWhat it is: [one line]\nMy role: [what you did]\nTools: [stack]\nLink: <a href=\"#\">[add link]</a>" }
+    ]},
+    { id: "reach", name: "Reach Out", files: [
+      { name: "email.txt", type: "link", body: "Email: <a href=\"mailto:you@example.com\">you@example.com</a>" },
+      { name: "linkedin.url", type: "link", body: "LinkedIn: <a href=\"https://linkedin.com/in/your-name\" target=\"_blank\" rel=\"noopener\">linkedin.com/in/your-name</a>" },
+      { name: "github.url", type: "link", body: "GitHub: <a href=\"https://github.com/your-name\" target=\"_blank\" rel=\"noopener\">github.com/your-name</a>" },
+      { name: "phone.txt", type: "link", body: "Phone: [your number]" }
+    ]}
+  ]
+};
+/* ===================== END EDIT BLOCK ===================== */
+
+const $ = s => document.querySelector(s);
+const ico = (id, cls) => `<svg${cls ? ` class="${cls}"` : ""}><use href="#i-${id}"/></svg>`;
+let cur = null, hist = [], sel = null;
+const touch = matchMedia("(hover:none)").matches;
+const folderOf = id => SITE.folders.find(f => f.id === id);
+
+function go(id, push = true) {
+  if (push) hist.push(cur);
+  cur = id; sel = null; draw();
+}
+function draw() {
+  const f = cur && folderOf(cur);
+  $("#ex-title").textContent = f ? f.name : SITE.title;
+  $("#t-ex").innerHTML = "";
+  $("#t-ex").textContent = f ? f.name : SITE.title;
+  $("#addr").innerHTML = ico(f ? "open" : "pc") + `<span>C:\\${SITE.title.replace(/\s+/g, "")}${f ? "\\" + f.name.replace(/\s+/g, "") : ""}</span>`;
+  $("#up").disabled = !cur;
+  $("#back").disabled = !hist.length;
+
+  // tree
+  $("#tree").innerHTML =
+    `<button class="node ${!cur ? "sel" : ""}" data-go="" role="treeitem">${ico("pc")}<span>${SITE.title}</span></button>` +
+    SITE.folders.map(x => `<button class="node kid ${cur === x.id ? "sel" : ""}" data-go="${x.id}" role="treeitem">${ico(cur === x.id ? "open" : "folder")}<span>${x.name}</span></button>`).join("");
+
+  // list
+  const items = f ? f.files.map(x => ({ key: x.name, name: x.name, icon: x.type === "link" ? "link" : "doc", kind: "file" }))
+                  : SITE.folders.map(x => ({ key: x.id, name: x.name, icon: "folder", kind: "folder" }));
+  $("#list").innerHTML = items.map(i => `<button class="item ${sel === i.key ? "sel" : ""}" data-key="${i.key}" data-kind="${i.kind}" role="listitem">${ico(i.icon)}<span>${i.name}</span></button>`).join("");
+  $("#st-count").textContent = items.length + " object(s)";
+  $("#st-sel").textContent = sel ? "1 selected" : "";
+}
+function openItem(key, kind) {
+  if (kind === "folder") return go(key);
+  const f = folderOf(cur), file = f.files.find(x => x.name === key);
+  $("#np-title").textContent = file.name + " - Notepad";
+  $("#np-body").innerHTML = file.body;
+  show("notepad", true);
+}
+function show(id, on) {
+  $("#" + id).hidden = !on;
+  if (id === "notepad") $("#t-np").hidden = !on, $("#t-np").textContent = on ? $("#np-title").textContent : "";
+  if (on) focusWin(id);
+  tasks();
+}
+function focusWin(id) {
+  const w = $("#" + id); w.style.zIndex = ++z; active = id; tasks();
+}
+function tasks() {
+  $("#t-ex").classList.toggle("on", active === "explorer" && !$("#explorer").hidden);
+  $("#t-np").classList.toggle("on", active === "notepad" && !$("#notepad").hidden);
+  document.querySelectorAll(".win .title").forEach(t => t.classList.toggle("off", t.dataset.drag !== active));
+}
+let z = 10, active = "explorer";
+
+// events
+$("#tree").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) go(b.dataset.go || null); });
+$("#list").addEventListener("click", e => {
+  const b = e.target.closest(".item");
+  if (!b) { sel = null; draw(); return; }
+  sel = b.dataset.key;
+  if (touch) return openItem(b.dataset.key, b.dataset.kind);
+  draw();
+});
+$("#list").addEventListener("dblclick", e => { const b = e.target.closest(".item"); if (b) openItem(b.dataset.key, b.dataset.kind); });
+$("#list").addEventListener("keydown", e => { const b = e.target.closest(".item"); if (b && e.key === "Enter") openItem(b.dataset.key, b.dataset.kind); });
+$("#back").onclick = () => { if (hist.length) go(hist.pop(), false); };
+$("#up").onclick = () => go(null);
+
+document.querySelectorAll(".win").forEach(w => {
+  w.addEventListener("pointerdown", () => focusWin(w.id));
+  w.querySelectorAll("[data-act]").forEach(b => b.onclick = () => {
+    const a = b.dataset.act;
+    if (a === "close" || a === "min") show(w.id, false);
+    if (a === "max") { w.classList.toggle("full"); if (w.classList.contains("full")) Object.assign(w.style, { left: "0", top: "0", width: "100%", height: "100%" }); else { w.style.left = w.style.top = w.style.width = w.style.height = ""; } }
+  });
+});
+$("#d-pc").onclick = () => { show("explorer", true); };
+$("#t-ex").onclick = () => { const h = $("#explorer").hidden || active !== "explorer"; show("explorer", h); };
+$("#t-np").onclick = () => { const h = $("#notepad").hidden || active !== "notepad"; show("notepad", h); };
+
+// drag
+let drag = null;
+document.querySelectorAll("[data-drag]").forEach(t => t.addEventListener("pointerdown", e => {
+  if (e.target.closest("button") || innerWidth <= 700) return;
+  const w = $("#" + t.dataset.drag); if (w.classList.contains("full")) return;
+  drag = { w, dx: e.clientX - w.offsetLeft, dy: e.clientY - w.offsetTop };
+  t.setPointerCapture(e.pointerId);
+}));
+addEventListener("pointermove", e => { if (drag) { drag.w.style.left = Math.max(0, e.clientX - drag.dx) + "px"; drag.w.style.top = Math.max(0, e.clientY - drag.dy) + "px"; } });
+addEventListener("pointerup", () => drag = null);
+
+// start menu
+$("#menu-opts").innerHTML =
+  SITE.folders.map(x => `<button class="node" data-m="${x.id}">${ico("folder")}<span>${x.name}</span></button>`).join("") +
+  `<hr><button class="node" data-m="">${ico("pc")}<span>${SITE.title}</span></button>`;
+$("#start").onclick = e => { e.stopPropagation(); $("#menu").hidden = !$("#menu").hidden; };
+$("#menu").addEventListener("click", e => { const b = e.target.closest("[data-m]"); if (!b) return; $("#menu").hidden = true; show("explorer", true); go(b.dataset.m || null); });
+document.addEventListener("click", e => { if (!e.target.closest("#menu,#start")) $("#menu").hidden = true; });
+
+// clock
+const tick = () => { $("#clock").textContent = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); };
+tick(); setInterval(tick, 20000);
+
+draw(); focusWin("explorer");
+</script>
+</body>
+</html>
